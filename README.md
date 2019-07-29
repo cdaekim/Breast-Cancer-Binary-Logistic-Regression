@@ -3,7 +3,9 @@ Using Excel, Solver, and Real-Statistics Add-In to predict breast cancer.
 
 Introduction
 Data is from Kaggle: https://www.kaggle.com/uciml/breast-cancer-wisconsin-data
+
 Real-statistics add-in: http://www.real-statistics.com/free-download/real-statistics-resource-pack/
+
 Excel version: Mac 2011
 
 Data:
@@ -35,12 +37,14 @@ The probability that Y=1 equation is defined as:
 The probability that Y=Y equation is defined as:
   - if diagnosis = 1, e^logit
   - if not diagnosis = 1, 1 - e^logit
+  
 The log likelihood (LL) equation is defined as:
   - the natural logarithm of the probability that Y = Y
+  
 The sum of the log likelihood equation is defined as:
   - ΣLL
 
-I chose to have two different probability columns because the probability equation, by definition, evaluates the probability a given record has the Diagnosis value of 1 (malignant). What I am after is the probability is if a given record has a probability of 1 or 0 (malignant or benign). The first probability column is used in an IF function (if probability is <0.5, then 0; if probability >0.5, then 1) while the second probability column is used for the log likelihood equation since the LL is used as a criterion for the best coefficients (Bn).
+I chose to have two different probability columns because the probability equation, by definition, evaluates the probability a given record has the Diagnosis value of 1 (malignant). What I am after is the probability is if a given record has a probability of 1 or 0 (malignant or benign). The first probability column is used in an IF function to test the model's prediction (if probability is <0.5, then 0; if probability >0.5, then 1) while the second probability column is used for the log likelihood equation since the LL is used as a criterion for the best coefficients (Bn).
 
 I made all possible models for differing degrees of freedom to compare the models and evaluate whether the addition of each new variable was significant by finding the differences between the sum of log likelihood (some sources refer to this as simply the log likelihood), finding the chi-square, and evaluating the p value. 
 
