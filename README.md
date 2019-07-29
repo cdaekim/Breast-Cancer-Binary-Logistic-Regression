@@ -90,6 +90,7 @@ Intercept, Area, Compactness, and Texture model yielded the second best results:
 
 
 __Conclusion__
+
 When I compared the model with all four variables against the model with the Area, Compactness, and Texture variables to test the significance of the addition of Concavity variable, the p value of the model (0.22) was greater than the alpha cut-off (0.05 or outside the 95% confidence interval). Although the model with all four variables yielded better results than the model with the Area, Texture, and Compactness model, it would be best to stay inline with statistical integrity. 
 
 A more thorough report will be also be made available in a pdf format in this repository.
