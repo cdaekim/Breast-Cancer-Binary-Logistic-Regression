@@ -1,14 +1,16 @@
 # Breast-Cancer-Binary-Logistic-Regression
 Using Excel, Solver, and Real-Statistics Add-In to predict breast cancer.
 
-Introduction
+
+__Introduction__
 Data is from Kaggle: https://www.kaggle.com/uciml/breast-cancer-wisconsin-data
 
 Real-statistics add-in: http://www.real-statistics.com/free-download/real-statistics-resource-pack/
 
 Excel version: Mac 2011
 
-Data:
+
+__Data:__
 
 - 569 Observations (rows)
 - 357 Benign observations
@@ -16,7 +18,8 @@ Data:
 - 150 Benign and 150 Malignant observations used for model building
 - 207 Benign and 62 Malignant observations used for model testing
 
-Methodology:
+
+__Methodology:__
 
 I usually see people using a 70/30 split for training. I originally tried this approach, however, I was worried about class imbalance. 
 I kept ~70% of malignant observations (150 out of 212) and ~45% of benign observations (150 out of 357), totaling ~53% (300 out of 569) of all available data for model building. 
@@ -55,7 +58,7 @@ I made all possible models for differing degrees of freedom to compare the model
 
 Throughout the variable evaluation phase, I followed the KISS philosophy (Keep It Simple, Stupid); the less complex the model is, the more reliable it is.
 
-Result:
+__Result:__
 
 Intercept, Area, Compactness, Concavity, and Texture Model yielded the best predicition results: 
 - Trial: 
@@ -84,4 +87,8 @@ Intercept, Area, Compactness, and Texture model yielded the second best results:
   - 91.5% Total correct prediction
   - Sum of log likelihood: -55.03836556
 
-However, when I compared the model to test the significance of the addition of Concavity variable, the p value of the model (0.22) was greater than the alpha cut-off (0.05 or outside the 95% confidence interval). Although the model with all four variables yielded better results than the model with the Area, Texture, and Compactness model, it would be best to stay inline with statistical integrity. 
+
+__Conclusion__
+When I compared the model with all four variables against the model with the Area, Compactness, and Texture variables to test the significance of the addition of Concavity variable, the p value of the model (0.22) was greater than the alpha cut-off (0.05 or outside the 95% confidence interval). Although the model with all four variables yielded better results than the model with the Area, Texture, and Compactness model, it would be best to stay inline with statistical integrity. 
+
+A more thorough report will be also be made available in a pdf format in this repository.
