@@ -30,10 +30,13 @@ The variables are:
   
 The logit equation is defined as:
   - B0 + B1V1 + B2V2 ... + BnVn
+  
 The odds equation is defined as:
   - e^logit
+  
 The probability that Y=1 equation is defined as:
   - e^logit/(1+e^logit)
+  
 The probability that Y=Y equation is defined as:
   - if diagnosis = 1, e^logit
   - if not diagnosis = 1, 1 - e^logit
