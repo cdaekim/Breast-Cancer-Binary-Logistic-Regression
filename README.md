@@ -49,7 +49,9 @@ The sum of the log likelihood equation is defined as:
 
 I chose to have two different probability columns because the probability equation, by definition, evaluates the probability a given record has the Diagnosis value of 1 (malignant). What I am after is the probability is if a given record has a probability of 1 or 0 (malignant or benign). The first probability column is used in an IF function to test the model's prediction (if probability is <0.5, then 0; if probability >0.5, then 1) while the second probability column is used for the log likelihood equation since the LL is used as a criterion for the best coefficients (Bn).
 
-I made all possible models for differing degrees of freedom to compare the models and evaluate whether the addition of each new variable was significant by finding the differences between the sum of log likelihood (some sources refer to this as simply the log likelihood), finding the chi-square, and evaluating the p value. 
+I made all possible models for differing degrees of freedom to compare the models and evaluate whether the addition of each new variable was significant by finding the differences between the sum of log likelihood (some sources refer to this as simply the log likelihood), finding the chi-square, and evaluating the p value. Furthermore, I kept the degree of freedom = 1 and compared the models stepwise.
+- For example:
+  - The LL of the model with the Area, Texture, and Compactness variables was compared with the LL of the model with the Area, Texture, Compactness, and Concavity variables. Since the second model has one more variable, the resulting degree of freedom would also be one.
 
 Throughout the variable evaluation phase, I followed the KISS philosophy (Keep It Simple, Stupid); the less complex the model is, the more reliable it is.
 
@@ -57,29 +59,29 @@ Result:
 
 Intercept, Area, Compactness, Concavity, and Texture Model yielded the best predicition results: 
 - Trial: 
-- 90.7% Malignant correct prediction
-- 94.0% Benign correct prediction
-- 92.3% Total correct prediction
-- Sum of log likelihood: -60.09897433
-
+  - 90.7% Malignant correct prediction
+  - 94.0% Benign correct prediction
+  - 92.3% Total correct prediction
+  - Sum of log likelihood: -60.09897433
+  - AUC = 0.976355556
 - Test:
-- 90.8% Benign correct prediction
-- 100.0% Malignant correct prediction
-- 92.2% Total correct prediction
-- Sum of log likelihood: -50.43476614
+  - 90.8% Benign correct prediction
+  - 100.0% Malignant correct prediction
+  - 92.2% Total correct prediction
+  - Sum of log likelihood: -50.43476614
 
 Intercept, Area, Compactness, and Texture model yielded the second best results:
 - Trial: 
-- 90.7% Malignant correct prediction
-- 93.3% Benign correct prediction
-- 92.0% Total correct prediction
-- Sum of log likelihood: -61.60081906
+  - 90.7% Malignant correct prediction
+  - 93.3% Benign correct prediction
+  - 92.0% Total correct prediction
+  - Sum of log likelihood: -61.60081906
+  - AUC = 0.975066667
 
 - Test:
-- 89.9% Benign correct prediction
-- 100.0% Malignant correct prediction
-- 91.5% Total correct prediction
-- Sum of log likelihood: -55.03836556
+  - 89.9% Benign correct prediction
+  - 100.0% Malignant correct prediction
+  - 91.5% Total correct prediction
+  - Sum of log likelihood: -55.03836556
 
-However, when I compared the model to test the significance of the addition of Concavity variable, the p value of the model (0.22) was greater than the alpha cut-off (0.05 or outside the 95% confidence interval). 
-The model with all four variables yielded better results than the model with the Area
+However, when I compared the model to test the significance of the addition of Concavity variable, the p value of the model (0.22) was greater than the alpha cut-off (0.05 or outside the 95% confidence interval). Although the model with all four variables yielded better results than the model with the Area, Texture, and Compactness model, it would be best to stay inline with statistical integrity. 
