@@ -23,15 +23,16 @@ __Data:__
 __Methodology:__
 
 I usually see people using a 70/30 split for training. I originally tried this approach, however, I was worried about class imbalance. 
-I kept ~70% of malignant observations (150 out of 212) and ~45% of benign observations (150 out of 357), totaling ~53% (300 out of 569) of all available data for model building. 
+I kept ~70% of malignant observations (150 out of 212) and ~45% of benign observations (150 out of 357), totaling ~53% (300 out of 569) of all available data for model building. I will refer to the 300 observations used as the trial stage and the remaining 269 observations as the testing stage.
 
-I made a PivotTable for the averages of the variables. I chose to use the variables whose averages had stark differences between the classes (malignant vs benign).
-The variables are:
-  - Area
-  - Texture
-  - Compactness
-  - Concavity
-  
+I made a PivotTable for the averages of the variables of all observations as a preliminary method to view the data and choose the appropriate variables for model building. I kept a note of the variables' averages that had a stark contrast between classes. I chose the 10 real value variables with the _mean_ suffix instead of using the se (standard error) or worst (max or min) variables. Furthermore, I made a correlation matrix to determine multicollinearity since multicollinearity will decrease increase the precision of the variables. I determined that there was 25 unique combinations (models) between the 10 real variables in the dataset with averages and weak correlation in mind. 
+
+After building the binary logistic regression models using Solver and the Real-Statistics add-in, I created a model comparison chart that recorded the number of variables, sum of log likelihoods (LL), chi-square, p-values, and significance. I also ranked the models in terms of LL values. I compared the models step-wise. I kept the degrees of freedom (df) equal to one and compared each model to its lowest value predecessor. 
+
+For example: The Texture and Smoothness model had a LL value of ~-144. I compared the LL of the Texture and Smoothness model with the LL of the Texture model since the Texture model had a lower LL value (~-165) than the Smoothness Model (~-190) and kept the df equal to one to test the significance of the inclusion of the Smoothness variable. 
+
+The Real-Statistics add-in determined the ideal coefficients per model. I used the calculated coefficients retrieved from the trial stage and implemented them in the testing stage (269 total observations, 207 benign observations, and 62 malignant observations) to determine the logit values. Below is a list of the equations used in the trial stage.
+
 The logit equation is defined as:
   - B0 + B1V1 + B2V2 ... + BnVn
   
@@ -53,44 +54,60 @@ The sum of the log likelihood equation is defined as:
 
 I chose to have two different probability columns because the probability equation, by definition, evaluates the probability a given record has the Diagnosis value of 1 (malignant). What I am after is the probability is if a given record has a probability of 1 or 0 (malignant or benign). The first probability column is used in an IF function to test the model's prediction (if probability is <0.5, then 0; if probability >0.5, then 1) while the second probability column is used for the log likelihood equation since the LL is used as a criterion for the best coefficients (Bn).
 
-I made all possible models for differing degrees of freedom to compare the models and evaluate whether the addition of each new variable was significant by finding the differences between the sum of log likelihood (some sources refer to this as simply the log likelihood), finding the chi-square, and evaluating the p value. Furthermore, I kept the degree of freedom = 1 and compared the models stepwise.
-- For example:
-  - The LL of the model with the Area, Texture, and Compactness variables was compared with the LL of the model with the Area, Texture, Compactness, and Concavity variables. Since the second model has one more variable, the resulting degree of freedom would also be one.
-
-Throughout the variable evaluation phase, I followed the KISS philosophy (Keep It Simple, Stupid); the less complex the model is, the more reliable it is.
 
 __Result:__
 
-Intercept, Area, Compactness, Concavity, and Texture Model yielded the best predicition results: 
+The Texture, Area, and Smoothness Model yielded the results in the trial stage.
 - Trial: 
-  - 90.7% Malignant correct prediction
-  - 94.0% Benign correct prediction
-  - 92.3% Total correct prediction
-  - Sum of log likelihood: -60.09897433
-  - AUC = 0.976355556
+  - 92.67% Malignant correct prediction
+  - 94.00% Benign correct prediction
+  - 93.33% Total correct prediction
+  - Sum of log likelihood: -50.15
+  - AUC = 0.9827
 - Test:
-  - 90.8% Benign correct prediction
-  - 100.0% Malignant correct prediction
-  - 92.2% Total correct prediction
-  - Sum of log likelihood: -50.43476614
+  - 87.92% Benign correct prediction
+  - 98.39% Malignant correct prediction
+  - 90.33% Total correct prediction
+  - Sum of log likelihood: -54.92
 
-Intercept, Area, Compactness, and Texture model yielded the second best results:
-- Trial: 
-  - 90.7% Malignant correct prediction
-  - 93.3% Benign correct prediction
-  - 92.0% Total correct prediction
-  - Sum of log likelihood: -61.60081906
-  - AUC = 0.975066667
+Multiple models yielded the same or better results in terms of overall correct prediction percentages in the test stage, specifically:
+  - Texture and Concave Points Model
+  - Area and Smoothness Model
+  - Texture, Area, and Fractal Dimension Model
+  - Texture, Fractal Dimension, and Concave Points Model. 
+  
+However, only the Texture and Concave Points Model and the Texture, Fractal Dimension, and Concave Points Model yielded a lower LL value than the Texture, Area, and Smoothness Model.
 
+Texture and Concave Points Model
 - Test:
-  - 89.9% Benign correct prediction
-  - 100.0% Malignant correct prediction
-  - 91.5% Total correct prediction
-  - Sum of log likelihood: -55.03836556
+  - 89.86% Benign correct prediction
+  - 96.77% Malignant correct prediction
+  - 91.45% Total correct prediction
+  - Sum of log likelihood: -51.95
+  
+Area and Smoothness Model
+- Test:
+  - 89.86% Benign correct prediction
+  - 95.16% Malignant correct prediction
+  - 91.08% Total correct prediction
+  - Sum of log likelihood: -63.81
+  
+Texture, Area, and Fractal Dimension Model
+- Test:
+  - 87.92% Benign correct prediction
+  - 98.39% Malignant correct prediction
+  - 90.33% Total correct prediction
+  - Sum of log likelihood: -60.28
 
+Texture, Fractal Dimension, and Concave Points Model
+- Test:
+  - 90.34% Benign correct prediction
+  - 95.16% Malignant correct prediction
+  - 91.45% Total correct prediction
+  - Sum of log likelihood: -44.02
+  
+__Conclusion and Closing Remarks__
 
-__Conclusion__
+It was really interesting to see that models with only two variables yielded the same or better predictive results as a model that was optimized with three variables. It was also interesting to see that the Texture, Fractal Dimension, and Concave Points Model yielded better results than the Texture, Area, and Smoothness Model in all categories in the test stage while performing worse in the trial stage. Another interesting point to notice was the fact that the models that contained either the Concave Points variable or the Area variable were present in the models that performed the best. The single variable Concave Points Model and the Area Model also had the lowest LL values (-84.43 and -96.06 respectively) in regards to the other single variable models and some two variable models.
 
-When I compared the model with all four variables against the model with the Area, Compactness, and Texture variables to test the significance of the addition of Concavity variable, the p value of the model (0.22) was greater than the alpha cut-off (0.05 or outside the 95% confidence interval). Although the model with all four variables yielded better results than the model with the Area, Texture, and Compactness model, it would be best to stay inline with statistical integrity. 
-
-A more thorough report will be also be made available in a pdf format in this repository.
+I hypothesize that there would be a change in the predictive capabilities of the models if there were more malignant observations within the testing stage. 
