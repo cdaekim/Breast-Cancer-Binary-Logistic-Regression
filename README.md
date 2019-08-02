@@ -29,7 +29,7 @@ I made a PivotTable for the averages of the variables of all observations as a p
 
 After building the binary logistic regression models using Solver and the Real-Statistics add-in, I created a model comparison chart that recorded the number of variables, sum of log likelihoods (LL), chi-square, p-values, and significance. I also ranked the models in terms of LL values. I compared the models step-wise. I kept the degrees of freedom (df) equal to one and compared each model to its lowest value predecessor. 
 
-For example: The Texture and Smoothness model had a LL value of ~-144. I compared the LL of the Texture and Smoothness model with the LL of the Texture model since the Texture model had a lower LL value (~-165) than the Smoothness Model (~-190) and kept the df equal to one to test the significance of the inclusion of the Smoothness variable. 
+For example: The Texture and Smoothness model had a LL value of approximately -144. I compared the LL of the Texture and Smoothness model with the LL of the Texture model since the Texture model had a lower LL value (approx. -165) than the Smoothness Model (approx. -190) and kept the df equal to one to test the significance of the inclusion of the Smoothness variable. 
 
 The Real-Statistics add-in determined the ideal coefficients per model. I used the calculated coefficients retrieved from the trial stage and implemented them in the testing stage (269 total observations, 207 benign observations, and 62 malignant observations) to determine the logit values. Below is a list of the equations used in the trial stage.
 
