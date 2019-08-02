@@ -1,5 +1,5 @@
 # Breast-Cancer-Binary-Logistic-Regression
-Using Excel, Solver, and Real-Statistics Add-In to predict breast cancer.
+Using Excel, Solver, and Real-Statistics add-in to predict malignancy and benignity of a tumor.
 
 
 __Introduction__
@@ -34,20 +34,20 @@ For example: The Texture and Smoothness model had a LL value of approximately -1
 The Real-Statistics add-in determined the ideal coefficients per model. I used the calculated coefficients retrieved from the trial stage and implemented them in the testing stage (269 total observations, 207 benign observations, and 62 malignant observations) to determine the logit values. Below is a list of the equations used in the trial stage.
 
 The logit equation is defined as:
-  - B0 + B1V1 + B2V2 ... + BnVn
+  - B0 + B1V1 + B2V2 … BnVn
   
 The odds equation is defined as:
   - e^logit
   
-The probability that Y=1 equation is defined as:
+The probability Y=1 equation is defined as:
   - e^logit/(1+e^logit)
   
-The probability that Y=Y equation is defined as:
-  - if diagnosis = 1, e^logit
-  - if not diagnosis = 1, 1 - e^logit
+The probability Y=Y equation is defined as:
+  - if diagnosis = 1, then probability Y=1
+  - if diagnosis ≠ 1, then 1 - probability Y=1
   
 The log likelihood (LL) equation is defined as:
-  - the natural logarithm of the probability that Y = Y
+  - the natural logarithm of the probability Y = Y
   
 The sum of the log likelihood equation is defined as:
   - ΣLL
